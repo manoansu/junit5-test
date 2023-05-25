@@ -6,14 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PessoaTest {
 
-    @Test
-    public void assercaoAgrupada() {
+      @Test
+    void assercaoAgrupada() {
+        Pessoa pessoa = new Pessoa("Alex", "Silva");
 
-        Pessoa pessoa = new Pessoa("Alex",  "Silva");
-
-        assertEquals("Alex", pessoa.getNome());
-        assertEquals("Silva", pessoa.getSobrenome());
-
+        assertAll("Asserções de pessoa",
+                ()-> assertEquals("Alex", pessoa.getNome()),
+                ()-> assertEquals("Silva", pessoa.getSobrenome()));
     }
 
 }
