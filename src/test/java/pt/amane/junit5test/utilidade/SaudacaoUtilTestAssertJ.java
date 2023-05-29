@@ -7,16 +7,18 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static pt.amane.junit5test.utilidade.SaudacaoUtilConditions.igualBomDia;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class SaudacaoUtilTest {
+class SaudacaoUtilTestAssertJ {
 
     @Test
     public void Dado_uma_horario_matuino_Quando_saudar_Entao_deve_retornar_bom_dia() {
         int horaValida = 9;
         String saudacao = SaudacaoUtil.saudar(horaValida);
-        assertEquals("Bom dia", saudacao);
+        assertThat(saudacao).is(igualBomDia());
     }
 
     @Test
@@ -28,7 +30,7 @@ class SaudacaoUtilTest {
 
     @Test
     public void Dado_uma_horario_noturno_Quando_saudar_Entao_deve_retornar_boa_noite() {
-        int horaValida = 21;
+        int horaValida = 4;
         String saudacao = SaudacaoUtil.saudar(horaValida);
         assertEquals("Boa noite", saudacao);
     }
@@ -36,9 +38,9 @@ class SaudacaoUtilTest {
     @Test
     public void Dado_uma_hora_invalida_Quando_saudar_Entao_deve_lancar_exception() {
         int horaInvalida = -10;
-        Executable chamadaInvalidaDeMetodo = () -> SaudacaoUtil.saudar(horaInvalida);
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, chamadaInvalidaDeMetodo);
-        assertEquals("Hora inválida", e.getMessage());
+        assertThatThrownBy(() -> SaudacaoUtil.saudar(horaInvalida))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Hora inválida");
     }
 
     @Test
